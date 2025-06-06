@@ -1,5 +1,5 @@
 /**
- * External Link Tracker
+ * Download Link Tracker
  * Tracks clicks on external links and opens them in new windows
  * Requires jQuery for AJAX functionality
  */
@@ -149,7 +149,7 @@
           handleExternalLinkClick(event, anchor);
         });
 
-        console.log('External link tracking added for:', href);
+        console.log('Download link tracking added for:', href);
       }
     });
   }
@@ -183,7 +183,7 @@
       subtree: true
     });
 
-    console.log('External link tracker initialized');
+    console.log('Download link tracker initialized');
   }
 
   // Initialize when DOM is ready

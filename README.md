@@ -16,7 +16,7 @@ A JavaScript library that automatically tracks clicks on external links and open
 1. Include the script in your HTML:
 
 ```html
-<script src="external-link-tracker.js"></script>
+<script src="download-link-tracker.js"></script>
 ```
 
 2. Configure tracking variables:
@@ -143,7 +143,7 @@ Open `example.html` in a web browser to see the tracker in action:
 
 This library is designed to work seamlessly with GitHub Pages:
 
-1. Upload `external-link-tracker.js` to your repository
+1. Upload `download-link-tracker.js` to your repository
 2. Include it in your GitHub Pages site
 3. Configure tracking variables
 4. Deploy and monitor external link activity

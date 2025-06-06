@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>External Link Tracker Test Page</title>
+  <title>Download Link Tracker Test Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -97,7 +97,7 @@
 </head>
 
 <body>
-  <h1>External Link Tracker Test Page</h1>
+  <h1>Download Link Tracker Test Page</h1>
 
   <div class="config">
     <h3>Configuration</h3>
@@ -108,7 +108,7 @@
 
   <div class="section internal-links">
     <h2>Internal Links (Should NOT be tracked)</h2>
-    <p>These links should behave normally and not trigger external link tracking:</p>
+    <p>These links should behave normally and not trigger download link tracking:</p>
     <ul class="link-list">
       <li>
         <a href="#section1">Anchor link</a>
@@ -187,8 +187,8 @@
     window.tracker_url = 'https://track.door43.org/track';
   </script>
 
-  <!-- Include the external link tracker -->
-  <script src="external-link-tracker.js"></script>
+  <!-- Include the download link tracker -->
+  <script src="download-link-tracker.js"></script>
 
   <!-- Test functionality -->
   <script>
@@ -235,7 +235,7 @@
 
     // Add some console logging to show when the page loads
     document.addEventListener('DOMContentLoaded', function () {
-      console.log('Test page loaded. External link tracker should be active.');
+      console.log('Test page loaded. Download link tracker should be active.');
       console.log('Configuration:');
       console.log('- mt_id:', window.mt_id);
       console.log('- tracker_url:', window.tracker_url);
