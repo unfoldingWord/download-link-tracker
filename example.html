@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>External Link Tracker Test Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .link-list li {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 3px;
+    }
+
+    .link-list a {
+      text-decoration: none;
+      color: #0066cc;
+      font-weight: bold;
+    }
+
+    .link-list a:hover {
+      text-decoration: underline;
+    }
+
+    .description {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .config {
+      background: #e8f4fd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .internal-links {
+      background: #f0f8e8;
+    }
+
+    .external-links {
+      background: #fff8e8;
+    }
+
+    .dynamic-content {
+      background: #f8e8f8;
+    }
+
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #0052a3;
+    }
+
+    #dynamic-links {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px dashed #999;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>External Link Tracker Test Page</h1>
+
+  <div class="config">
+    <h3>Configuration</h3>
+    <p><strong>Tracking ID:</strong> <code>test-tracker-123</code></p>
+    <p><strong>Tracker URL:</strong> <code>https://track.door43.org/track</code></p>
+    <p>Open browser console to see tracking logs.</p>
+  </div>
+
+  <div class="section internal-links">
+    <h2>Internal Links (Should NOT be tracked)</h2>
+    <p>These links should behave normally and not trigger external link tracking:</p>
+    <ul class="link-list">
+      <li>
+        <a href="#section1">Anchor link</a>
+        <div class="description">Fragment/anchor link on same page</div>
+      </li>
+      <li>
+        <a href="/test-page">Relative link</a>
+        <div class="description">Relative path (will 404 but that's expected)</div>
+      </li>
+      <li>
+        <a href="./test-file.html">Relative link with ./</a>
+        <div class="description">Relative path with explicit current directory</div>
+      </li>
+      <li>
+        <a href="../index.html">Parent directory link</a>
+        <div class="description">Relative path to parent directory</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section external-links">
+    <h2>External Links (SHOULD be tracked)</h2>
+    <p>These links should be intercepted, tracked, and opened in new windows:</p>
+
+    <h3>Door43 Resources</h3>
+    <ul class="link-list">
+      <li>
+        <a href="https://git.door43.org/unfoldingWord/en_obs/raw/master/obs-en.pdf">OBS PDF from git.door43.org</a>
+        <div class="description">PDF file - should be categorized as 'stories'</div>
+      </li>
+      <li>
+        <a href="https://door43.org/en/?resource=obs">Door43 OBS Resource</a>
+        <div class="description">HTML page - should be categorized as 'stories'</div>
+      </li>
+      <li>
+        <a href="https://cdn.door43.org/obs/en/obs-tn.docx">OBS Translation Notes DOCX</a>
+        <div class="description">DOCX file - should be categorized as 'tn'</div>
+      </li>
+    </ul>
+
+    <h3>Other External Resources</h3>
+    <ul class="link-list">
+      <li>
+        <a href="https://filedn.com/lc6iFYoKQVHjU6JNjUhVZCw/audio/obs-en-01.mp3">Audio file from filedn.com</a>
+        <div class="description">MP3 file - should be categorized as 'audio'</div>
+      </li>
+      <li>
+        <a href="https://example.com/sample.mp4">Video file</a>
+        <div class="description">MP4 file - should be categorized as 'video'</div>
+      </li>
+      <li>
+        <a href="https://github.com/unfoldingWord/obs-tools">GitHub Repository</a>
+        <div class="description">GitHub link - should be categorized as 'stories'</div>
+      </li>
+      <li>
+        <a href="https://unfoldingword.org/obs-tq.epub">OBS Study Questions EPUB</a>
+        <div class="description">EPUB file - should be categorized as 'tq'</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section dynamic-content">
+    <h2>Dynamic Content Test</h2>
+    <p>Test the MutationObserver functionality by adding links dynamically:</p>
+    <button onclick="addDynamicLinks()">Add Dynamic External Links</button>
+    <div id="dynamic-links"></div>
+  </div>
+
+  <!-- Include jQuery for AJAX functionality -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Configuration variables -->
+  <script>
+    // Set up tracking configuration
+    window.mt_id = 'test-tracker-123';
+    window.tracker_url = 'https://track.door43.org/track';
+  </script>
+
+  <!-- Include the external link tracker -->
+  <script src="external-link-tracker.js"></script>
+
+  <!-- Test functionality -->
+  <script>
+    function addDynamicLinks() {
+      const container = document.getElementById('dynamic-links');
+
+      const newLinks = [
+        {
+          url: 'https://git.door43.org/unfoldingWord/en_obs/raw/master/obs-sn.pdf',
+          text: 'Dynamically added OBS Study Notes PDF',
+          description: 'Should be tracked and categorized as "sn"'
+        },
+        {
+          url: 'https://cdn.door43.org/audio/obs-en.zip',
+          text: 'Dynamically added Audio ZIP',
+          description: 'Should be tracked and categorized as "audio"'
+        },
+        {
+          url: 'https://example.com/obs-sq.odt',
+          text: 'Dynamically added Study Questions ODT',
+          description: 'Should be tracked and categorized as "sq"'
+        }
+      ];
+
+      container.innerHTML = '<h4>Dynamically Added Links:</h4>';
+
+      newLinks.forEach(function (link) {
+        const linkElement = document.createElement('div');
+        linkElement.style.margin = '10px 0';
+        linkElement.style.padding = '10px';
+        linkElement.style.background = '#f0f0f0';
+        linkElement.style.borderRadius = '3px';
+
+        linkElement.innerHTML = `
+                    <a href="${link.url}" style="color: #0066cc; font-weight: bold; text-decoration: none;">${link.text}</a>
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">${link.description}</div>
+                `;
+
+        container.appendChild(linkElement);
+      });
+
+      console.log('Dynamic links added. The tracker should automatically detect and process them.');
+    }
+
+    // Add some console logging to show when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log('Test page loaded. External link tracker should be active.');
+      console.log('Configuration:');
+      console.log('- mt_id:', window.mt_id);
+      console.log('- tracker_url:', window.tracker_url);
+    });
+  </script>
+</body>
+
+</html>
