@@ -7,14 +7,6 @@
 (function () {
   'use strict';
 
-  function last_node_from_url(url) {
-    var last_node = url.split('/').pop();
-    if (!last_node) {
-      return '';
-    }
-    return last_node;
-  }
-
   function track_clicks(anchor, custom_mt_id = '') {
     let href = anchor.getAttribute("href");
     if (!href) {
@@ -35,8 +27,29 @@
     let lang = 'en';
     let category = 'stories'
 
-    filename = last_node_from_url(download_url);
-    ext = filename.slice(filename.lastIndexOf("."));
+    const urlObj = new URL(download_url);
+
+    filename = urlObj.pathname.split('/').pop() || '';
+    ext = filename.slice(filename.lastIndexOf(".")) || '';
+
+    // Check if the domain is preview and set extension to pdf as we'll assume that's what they are after
+    try {
+      if (urlObj.hostname.includes('preview.door43.org')) {
+        ext = 'pdf';
+        // For preview.door43.org URLs, extract the 3rd path segment as filename
+        const pathSegments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        if (pathSegments.length >= 3) {
+          filename = pathSegments[2] + '_preview-door43-org.pdf';
+        }
+      }
+    } catch (e) {
+      // Invalid URL, continue with existing logic
+    }
+
+    if (!ext) {
+      console.warn("No file extension found in the URL. Cannot track this download.");
+      return;
+    }
 
     if (['pdf', 'docx', 'epub', 'odt'].includes(ext)) {
       if (filename.includes('obs-tq'))
