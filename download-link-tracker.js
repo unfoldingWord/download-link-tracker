@@ -79,6 +79,11 @@
     else if (filename.includes('obs-sq'))
       category = 'sq';
 
+    if (!category) {
+      console.warn("No category determined for the file. Cannot track this download.");
+      return;
+    }
+
     const url = `${my_tracker_url}?mt_id=${encodeURIComponent(my_mt_id)}&mt_lang=${encodeURIComponent(lang)}&mt_file=${encodeURIComponent(filename)}&mt_category=${encodeURIComponent(category)}`;
     console.log("Tracking URL: ", url);
 
