@@ -30,7 +30,9 @@
     const urlObj = new URL(download_url);
 
     filename = urlObj.pathname.split('/').pop() || '';
-    ext = filename.slice(filename.lastIndexOf(".")) || '';
+    if (filename.lastIndexOf('.') > 0) {
+      ext = filename.slice(filename.lastIndexOf(".")) || '';
+    }
 
     // Check if the domain is preview and set extension to pdf as we'll assume that's what they are after
     try {
