@@ -1,4 +1,4 @@
-# External Link Tracker
+# Download Link Tracker
 
 A JavaScript library that automatically tracks clicks on external links and opens them in new windows. Designed for websites that need to monitor outbound link activity while maintaining good user experience.
 
