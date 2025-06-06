@@ -50,6 +50,7 @@
       console.warn("No file extension found in the URL. Cannot track this download.");
       return;
     }
+    console.log("Extension found:", ext);
 
     if (['pdf', 'docx', 'epub', 'odt'].includes(ext)) {
       if (filename.includes('obs-tq'))
